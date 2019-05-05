@@ -19,6 +19,7 @@ class Navigation:
         self.list_cat = []
         self.list_pro = []
         self.id_min = int()
+        self.save = ""
 
     def category_choice(self):
         print("Bienvenue chez Pur Beurre,\n"
@@ -83,7 +84,6 @@ class Navigation:
         return self.id_min
 
     def show_substitute(self):
-
         self.mysql.execute(""" USE pur_beurre""")
         self.mysql.execute(""" SELECT id_product, product_name,
                                 nutritional_score, url, ingredients,
@@ -103,23 +103,23 @@ class Navigation:
         print("\nCatégorie: ", detail[0]['category_name'])
         print("\nLieu d'achat: ", detail[0]['purchase_place'])
         # Save the product ?
-        print("\n\nSouhaitez-vous sauvegarder ce produit ?  Y/N !")
-
-
-        # # Take the nutriscore of product
-        # self.mysql.execute(""" USE pur_beurre""")
-        # self.mysql.execute(""" SELECT nutritional_score FROM products
-        #                                 WHERE product_name = %s; """,
-        #                    self.list_pro[int(self.choice_pro)])
-        # rowsp = self.mysql.fetchall()
-        # for i in range(len(rowsp)):
-        #     print(i, " - ", rowsp[i]['nutritional_score'])
-        #     nutri_pro.append(rowsp[i]['nutritional_score'])
-        # # Find the best nutriscore in category
-        # self.choice_pro = -1
-        # while self.choice_pro < 0 or self.choice_pro > len(rows):
-        #     try:
-        #         self.choice_pro = int(input("\nChoisissez un produit:  "))
-        #     except:
-        #         print("\nCe n'est pas un nombre !")
-        # return self.choice_pro
+        self.save = 0
+        while self.save < 1 or self.save > 2:
+            try:
+                self.save = int(input("\n\nSouhaitez-vous sauvegarder ce produit ?  1-OUI 2-NON : "))
+            except:
+                print("Entrez 1 pour sauvegarder votre produit ou "
+                      "2 pour revenir au choix des catégories !")
+        if self.save == 1:
+            self.mysql.execute("""INSERT INTO substitute (id_product, product_name,
+                                        nutritional_score, url, ingredients, category_name, purchase_place)\
+                                        VALUES (%s, %s, %s, %s, %s, %s, %s);""",
+                               (detail[0]['id_product'], detail[0]['product_name'], detail[0]['nutritional_score'],
+                                detail[0]['url'], detail[0]['ingredients'], detail[0]['category_name'],
+                                detail[0]['purchase_place']))
+            self.connection.commit()
+            print("\n Votre recherche est sauvegardée !"
+                  "\n RETOUR A L'ACCUEIL !")
+        else:
+            print("\n Votre recherche n'est pas sauvegardée !"
+                  "\n RETOUR A L'ACCUEIL !")

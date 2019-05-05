@@ -32,8 +32,8 @@ class GetDataApi:
 
     def getproducts(self):
         """
-        Gets all the products from the category and puts them in
-        a list, at 1 page of products per index of the list.
+        Gets the 20 first products from the category and puts them in
+        a list.
         """
         # request on the last category to get the json (at least the first page)
         categoryname = self.getcategory()
