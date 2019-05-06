@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
+""" This script get data we need from OpenFoodfact """
+
 import json
 import requests
 import unicodedata
@@ -31,11 +33,10 @@ class GetDataApi:
         return cat_list_clean
 
     def getproducts(self):
+        """ Gets the 20 first products from the category
+        and puts them in a list.
         """
-        Gets the 20 first products from the category and puts them in
-        a list.
-        """
-        # request on the last category to get the json (at least the first page)
+        # get the 20 products by category
         categoryname = self.getcategory()
         product_for_bdd = []
         i = 0
@@ -48,7 +49,7 @@ class GetDataApi:
                 data = json.loads(content)
                 j = 0
 
-                # For each page, iterate on the number of products to add them to the table
+                # For each category, add the product in a tuple to a clean list
                 while j < len(data["products"]):
                     id_product = data["products"][j]["code"]
                     product_name = data["products"][j]["product_name"]
@@ -77,5 +78,5 @@ class GetDataApi:
                     product_for_bdd.append(data_complete)
                     j += 1
             i += 1
-        # returns a list containing the json with the products (20 json per page)
+        # returns a list containing all product who belong to the 20 category
         return product_for_bdd

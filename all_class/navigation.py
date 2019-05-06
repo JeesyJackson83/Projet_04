@@ -22,11 +22,7 @@ class Navigation:
         self.save = ""
 
     def category_choice(self):
-        print("Bienvenue chez Pur Beurre,\n"
-              "Ceci est un Proof of Concept \n"
-              "Le choix des catégories est limité à 20 \n"
-              "Ainsi que le choix des produits par catégories limité à 20 \n \n"
-              "Pour naviguer entre les catégories et produits, "
+        print("\nPour naviguer entre les catégories et produits, "
               "il vous suffit de rentrer les chiffres correspondants. \n \n")
         # Show category list
         self.mysql.execute(""" USE pur_beurre""")
@@ -123,3 +119,31 @@ class Navigation:
         else:
             print("\n Votre recherche n'est pas sauvegardée !"
                   "\n RETOUR A L'ACCUEIL !")
+
+    def show_save(self):
+        self.mysql.execute(""" USE pur_beurre""")
+        self.mysql.execute(""" SELECT id_product, product_name,
+                                        nutritional_score, url, ingredients,
+                                        category_name, purchase_place FROM substitute """)
+        detail = self.mysql.fetchall()
+        if not detail:
+            print("\n\nVous n'avez pas encore de produit sauvegardé!\n\n"
+                  "\nRETOUR A L'ACCUEIL !\n")
+
+        if detail:
+            i = 0
+            while i < len(detail):
+                print("---------------------------------------------------------------------------\n"
+                      "-                                                                         -\n"
+                      "-                                DETAILS                                  -\n"
+                      "-                                                                         -\n"
+                      "---------------------------------------------------------------------------\n")
+                print("\nNom du produit: ", detail[i]['product_name'])
+                print("\nId du produit: ", detail[i]['id_product'])
+                print("\nScore nutritionnel: ", detail[i]['nutritional_score'])
+                print("\nURL: ", detail[i]['url'])
+                print("\nIngrédients: ", detail[i]['ingredients'])
+                print("\nCatégorie: ", detail[i]['category_name'])
+                print("\nLieu d'achat: ", detail[i]['purchase_place'])
+                print("\n---------------------------------------------------------------------------\n\n")
+                i += 1

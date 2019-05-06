@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-""" Project 05 for Pur Beurre
-fdfdf"""
-
-import json
+""" Project 05 for Pur Beurre by Jessy
+This script allow user to interract with OpenFoodFacts API
+to find the better product in chosen category.
+All informations you need is provide by the README.md"""
 
 from all_class import dbinit as db
 from all_class import api_data_manager as apid
@@ -16,18 +16,26 @@ init_db = db.DatabaseInit()
 get_api = apid.GetDataApi()
 fill_bdd = bddm.FillDatabase()
 
+
 def start():
     """ This method will manage user navigation"""
     user_nav = nav.Navigation()
 
     loop = True
     while loop:
+        print("Bienvenue chez Pur Beurre,\n"
+              "Ceci est un Proof of Concept. \n"
+              "Le choix des catégories est limité à 20, \n"
+              "Ainsi que le choix des produits par catégories.\n"
+              "Pour naviguer entre les choix il vous suffit "
+              "d'entrer les chiffres correspondant aux propositions \n \n")
+
         print("\n1 - Choisissez un aliment à remplacer")
         print("2 - Consulter les aliments précédemments remplacés")
         print("Pour quitter, tapez Q.")
         user_screen = input("Votre choix : ")
 
-        if user_screen.lower() == 'q':
+        if user_screen.lower() == "q":
             break
         try:
             user_screen = int(user_screen)
@@ -38,29 +46,18 @@ def start():
 
         if user_screen == 1:
 
-            # Categories' choices :
-            pick.choosecategory()
-
-            # choose food :
-            idswitchedproduct = pick.choosefood(pick.categoryname)
-
-            if idswitchedproduct == 1:
-                break
-
-            # choose substitute or not :
-            pick.choosesubstitute(idswitchedproduct)
+            # Run user navigation:
+            user_nav.category_choice()
+            user_nav.product_choice()
+            user_nav.find_substitute()
+            user_nav.show_substitute()
 
         elif user_screen == 2:
-            pick.getdetails()
-            pass
-
-
+            user_nav.show_save()
 
 
 if __name__ == '__main__':
     init_db.create()
     fill_bdd.category_update()
     fill_bdd.products_update()
-    # start()
-
-
+    start()

@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
+""" This script Drop the actual database and create a new one,
+ Only one time when main.py is running """
+
 import pymysql
 
 
