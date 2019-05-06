@@ -7,14 +7,17 @@ to find the better product in chosen category.
 All informations you need is provide by the README.md"""
 
 from all_class import dbinit as db
-from all_class import api_data_manager as apid
 from all_class import bdd_data_manager as bddm
 from all_class import navigation as nav
 
 
-init_db = db.DatabaseInit()
-get_api = apid.GetDataApi()
-fill_bdd = bddm.FillDatabase()
+def data_init():
+    init_db = db.DatabaseInit()
+    fill_bdd = bddm.FillDatabase()
+
+    init_db.create()
+    fill_bdd.category_update()
+    fill_bdd.products_update()
 
 
 def start():
@@ -57,7 +60,5 @@ def start():
 
 
 if __name__ == '__main__':
-    init_db.create()
-    fill_bdd.category_update()
-    fill_bdd.products_update()
+    data_init()
     start()
