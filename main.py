@@ -14,10 +14,16 @@ from all_class import navigation as nav
 def data_init():
     init_db = db.DatabaseInit()
     fill_bdd = bddm.FillDatabase()
+    check_bdd = init_db.check_bdd()
 
-    init_db.create()
-    fill_bdd.category_update()
-    fill_bdd.products_update()
+    if check_bdd[0]["COUNT(*)"] == 20 and \
+            check_bdd[0]["(SELECT COUNT(*) FROM products)"] == 400:
+            print("Base de données déja intégrée")
+    else:
+        print("Création de la base de données")
+        init_db.create()
+        fill_bdd.category_update()
+        fill_bdd.products_update()
 
 
 def start():

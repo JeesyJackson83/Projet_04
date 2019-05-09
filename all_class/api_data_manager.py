@@ -24,12 +24,12 @@ class GetDataApi:
         # Create category list :
         cat_list = []
         i = 0
-        while i <= 22:
+        while i <= 21:
             cat_list.append(cat_file['tags'][i]['name'])
             cat_list[i] = unicodedata.normalize('NFKD', cat_list[i]).\
                 encode('ascii', 'ignore').decode()
             i += 1
-        cat_list_clean = cat_list[3:]
+        cat_list_clean = cat_list[2:]
         return cat_list_clean
 
     def getproducts(self):

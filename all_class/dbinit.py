@@ -58,3 +58,10 @@ class DatabaseInit:
 
         finally:
             self.connection.close()
+
+    def check_bdd(self):
+        mysql = self.connection.cursor()
+        mysql.execute("""USE `pur_beurre`""")
+        mysql.execute("""SELECT COUNT(*),(SELECT COUNT(*) FROM products) FROM category;""")
+        check = mysql.fetchall()
+        return check
