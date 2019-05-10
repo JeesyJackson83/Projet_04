@@ -1,5 +1,6 @@
-#Pur Beurre
-##OpenClassroom - Python - Project 05
+__Pur Beurre__
+
+**OpenClassroom - Python - Project 05**
 
 #####PURPOSE
 User can interact with api thanks to this program. He can show a selection of products to find the best sort by category.

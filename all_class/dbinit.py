@@ -33,7 +33,7 @@ class DatabaseInit:
                 mysql.execute("""CREATE TABLE Products(
                                                     id_t_prod BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                     id_product BIGINT UNSIGNED NOT NULL,
-                                                    product_name VARCHAR(100) NOT NULL,
+                                                    product_name VARCHAR(200) NOT NULL,
                                                     nutritional_score SMALLINT NOT NULL,
                                                     url VARCHAR(200) NOT NULL,
                                                     ingredients TEXT,
