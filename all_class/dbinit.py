@@ -25,13 +25,13 @@ class DatabaseInit:
                 mysql.execute("""USE `pur_beurre`""")
                 # Create Tables
                 mysql.execute("""CREATE TABLE Category(
-                                                    id_category BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                    id_category TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                     category_name TEXT NOT NULL)
                                                     ENGINE=INNODB;
                                                     """)
 
                 mysql.execute("""CREATE TABLE Products(
-                                                    id_t_prod BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                    id_t_prod SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                     id_product BIGINT UNSIGNED NOT NULL,
                                                     product_name VARCHAR(200) NOT NULL,
                                                     nutritional_score SMALLINT NOT NULL,
@@ -43,9 +43,9 @@ class DatabaseInit:
                                                     """)
 
                 mysql.execute("""CREATE TABLE Substitute(
-                                                    id_t_sub BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                    id_t_sub SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                     id_product BIGINT UNSIGNED NOT NULL,
-                                                    product_name VARCHAR(80) NOT NULL,
+                                                    product_name VARCHAR(200) NOT NULL,
                                                     nutritional_score SMALLINT NOT NULL,
                                                     url VARCHAR(200) NOT NULL,
                                                     ingredients TEXT,
