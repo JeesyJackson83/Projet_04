@@ -60,8 +60,17 @@ class DatabaseInit:
             self.connection.close()
 
     def check_bdd(self):
-        mysql = self.connection.cursor()
-        mysql.execute("""USE `pur_beurre`""")
-        mysql.execute("""SELECT COUNT(*),(SELECT COUNT(*) FROM products) FROM category;""")
-        check = mysql.fetchall()
-        return check
+        try:
+            with self.connection.cursor() as mysql:
+                mysql.execute("""USE `pur_beurre`""")
+                mysql.execute("""SELECT COUNT(*),(SELECT COUNT(*) FROM products) FROM category;""")
+                check = mysql.fetchall()
+                if check[0]["COUNT(*)"] == 20 and \
+                        check[0]["(SELECT COUNT(*) FROM products)"] == 400:
+                    check_bdd = 1
+                else:
+                    check_bdd = 0
+                return check_bdd
+        except:
+            check_bdd = 0
+            return check_bdd

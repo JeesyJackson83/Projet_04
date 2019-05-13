@@ -15,10 +15,8 @@ def data_init():
     init_db = db.DatabaseInit()
     fill_bdd = bddm.FillDatabase()
     check_bdd = init_db.check_bdd()
-
-    if check_bdd[0]["COUNT(*)"] == 20 and \
-            check_bdd[0]["(SELECT COUNT(*) FROM products)"] == 400:
-            print("Base de données déja intégrée")
+    if check_bdd == 1:
+        print("Base de données déja intégrée")
     else:
         print("Création de la base de données")
         init_db.create()
