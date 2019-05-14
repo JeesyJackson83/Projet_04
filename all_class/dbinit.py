@@ -20,13 +20,13 @@ class DatabaseInit:
         try:
             with self.connection.cursor() as mysql:
                 # DROP & CREATE Database
-                mysql.execute("""DROP DATABASE IF EXISTS `pur_beurre`""")
-                mysql.execute("""CREATE DATABASE IF NOT EXISTS `pur_beurre`""")
+                mysql.execute("""DROP DATABASE IF EXISTS `pur_beurre`;""")
+                mysql.execute("""CREATE DATABASE IF NOT EXISTS `pur_beurre`;""")
                 mysql.execute("""USE `pur_beurre`""")
                 # Create Tables
                 mysql.execute("""CREATE TABLE Category(
                                                     id_category TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                                    category_name TEXT NOT NULL)
+                                                    category_name VARCHAR(255) NOT NULL UNIQUE)
                                                     ENGINE=INNODB;
                                                     """)
 
@@ -35,10 +35,14 @@ class DatabaseInit:
                                                     id_product BIGINT UNSIGNED NOT NULL,
                                                     product_name VARCHAR(200) NOT NULL,
                                                     nutritional_score SMALLINT NOT NULL,
-                                                    url VARCHAR(200) NOT NULL,
+                                                    url VARCHAR(255) NOT NULL,
                                                     ingredients TEXT,
-                                                    category_name TEXT NOT NULL,
-                                                    purchase_place VARCHAR(100))
+                                                    category_name VARCHAR(255) NOT NULL,
+                                                    purchase_place VARCHAR(100),
+                                                    INDEX (id_product),
+                                                    CONSTRAINT fk_category_name
+                                                    FOREIGN KEY (category_name)
+                                                    REFERENCES Category(category_name))
                                                     ENGINE=INNODB;
                                                     """)
 
@@ -50,7 +54,10 @@ class DatabaseInit:
                                                     url VARCHAR(200) NOT NULL,
                                                     ingredients TEXT,
                                                     category_name TEXT NOT NULL,
-                                                    purchase_place VARCHAR(100))
+                                                    purchase_place VARCHAR(100),
+                                                    CONSTRAINT fk_id_product
+                                                    FOREIGN KEY (id_product)
+                                                    REFERENCES Products(id_product))
                                                     ENGINE=INNODB;
                                                     """)
 
