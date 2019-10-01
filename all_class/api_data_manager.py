@@ -48,13 +48,15 @@ class GetDataApi:
             for content in listjson:
                 data = json.loads(content)
                 j = 0
-
                 # For each category, add the product in a tuple to a clean list
                 while j < len(data["products"]):
                     id_product = data["products"][j]["code"]
-                    product_name = data["products"][j]["product_name"]
-                    product_name = unicodedata.normalize("NFKD", product_name). \
-                        encode("ascii", "ignore").decode()
+                    try:
+                        product_name = data["products"][j]["product_name"]
+                        product_name = unicodedata.normalize("NFKD", product_name). \
+                            encode("ascii", "ignore").decode()
+                    except:
+                        product_name = "Non renseigné"
                     nutritional_score = data["products"][j]["nutrition_score_debug"]
                     nutritional_score = nutritional_score[-2:]
                     # If the nutritional score is missing, it takes the value 100
@@ -63,15 +65,18 @@ class GetDataApi:
                     except:
                         nutritional_score = 100
                     url = data["products"][j]["url"]
-                    ingredients = data["products"][j]["ingredients_text_debug"]
-                    if ingredients:
-                        ingredients = unicodedata.normalize("NFKD", ingredients). \
-                            encode("ascii", "ignore").decode()
+                    try:
+                        ingredients = data["products"][j]["ingredients_text_debug"]
+                        if ingredients:
+                            ingredients = unicodedata.normalize("NFKD", ingredients). \
+                                encode("ascii", "ignore").decode()
+                    except:
+                        ingredients = "Non renseigné"
                     category_name = categoryname[i]
                     try:
                         purchase_place = data["products"][j]["purchase_places"]
                     except:
-                        purchase_place = ""
+                        purchase_place = "Non renseigné"
                     # Create a tuple for all data needed
                     data_complete = (id_product, product_name, nutritional_score,
                                      url, ingredients, category_name, purchase_place)

@@ -38,7 +38,7 @@ class DatabaseInit:
                                                     url VARCHAR(255) NOT NULL,
                                                     ingredients TEXT,
                                                     category_name VARCHAR(255) NOT NULL,
-                                                    purchase_place VARCHAR(100),
+                                                    purchase_place VARCHAR(200),
                                                     INDEX (id_product),
                                                     CONSTRAINT fk_category_name
                                                     FOREIGN KEY (category_name)
@@ -54,7 +54,7 @@ class DatabaseInit:
                                                     url VARCHAR(200) NOT NULL,
                                                     ingredients TEXT,
                                                     category_name TEXT NOT NULL,
-                                                    purchase_place VARCHAR(100),
+                                                    purchase_place VARCHAR(200),
                                                     CONSTRAINT fk_id_product
                                                     FOREIGN KEY (id_product)
                                                     REFERENCES Products(id_product))
